@@ -1,5 +1,6 @@
 package com.example.materialproject.Controller;
 
+import com.example.materialproject.Repository.MaterialDao;
 import com.example.materialproject.pojo.Material;
 import com.example.materialproject.services.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class MaterialController {
 
     private MaterialService materialService;
@@ -37,16 +38,42 @@ public class MaterialController {
     public Optional<Material> getMaterialByTitle(@PathVariable Integer id) {
         return materialService.getMaterial(id);
     }
+
     //api to send data to DB
     @PostMapping("api/material/add")
-    public void registerNewMaterial(@RequestBody Material material) {
-
+    public void registerNewMaterial(@RequestBody Material material  ) {
         materialService.addNewMaterial(material);
 //        if(  getFileExtension(material.getAttachments()).equals("pdf") || getFileExtension(material.getAttachments()).equals("png")){
 //            materialService.addNewMaterial(material);
 //        }
-
     }
+
+//    //api to send data to DB
+//    @PostMapping("api/material/add")
+//    public void registerNewMaterial(@RequestPart("material") Material material ,@RequestParam(value = "file" ,required = false) MultipartFile file ) {
+//        materialService.addNewMaterial(material,file);
+////        if(  getFileExtension(material.getAttachments()).equals("pdf") || getFileExtension(material.getAttachments()).equals("png")){
+////            materialService.addNewMaterial(material);
+////        }
+//    }
+    @PutMapping ("api/material/update")
+    public void replaceMaterial(@RequestBody Material material) {
+        materialService.upDateMaterial(material);
+    }
+
+//    @PostMapping("/upload")
+//    public UploadResponse handleFileUpload(@RequestParam("file")MultipartFile file){
+//        Date d = new Date();
+//        String fileName = d.getTime() +"_" + file.getOriginalFilename();
+//        try {
+//            file.transferTo(new File("C:\\Users\\lllx8\\Downloads\\material-project\\material-project\\src\\main\\resources\\static\\"+ fileName));
+//            //upload/1649098586898_Week 1 content.pdf
+//        } catch (Exception e){
+//            System.out.println(e.getMessage());
+//            return null ; //ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//        return new UploadResponse("http://localhost:8080/" + fileName);
+//    }
 
     //api to delelte data by id from DB
     @DeleteMapping(path = "api/material/delete/{id}")
@@ -63,5 +90,15 @@ public class MaterialController {
         }
     }
 
-
+//    private class UploadResponse {
+//
+//        String url;
+//        public  UploadResponse(String url) {
+//            this.url = url;
+//        }
+//
+//        public String getUrl() {
+//            return this.url;
+//        }
+//    }
 }

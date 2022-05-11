@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface MaterialDao extends JpaRepository<Material,Integer> {
 
-
     public List<Material> findByTitle(String title);
 
 }
